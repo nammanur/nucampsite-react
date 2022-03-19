@@ -180,6 +180,7 @@ class Contact extends Component {
                                             <Control.checkbox
                                                 name="agree"
                                                 model=".agree"
+                                                id="agree"
                                                 className="form-check-input" /> {' '}
                                             <strong>May we contact you?</strong>
                                         </Label>
@@ -187,6 +188,7 @@ class Contact extends Component {
                                 </Col>
                                 <Col md={4}>
                                     <Control.select name="contactType"
+                                        id="contactType"
                                         model=".contactType">
                                         <option>By Phone</option>
                                         <option>By Email</option>
