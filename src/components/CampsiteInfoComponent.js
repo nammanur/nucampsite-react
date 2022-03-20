@@ -22,14 +22,14 @@ function RenderCampsite({ campsite }) {
     return <div />;
 }
 
-function RenderComments({ comments }) {
+function RenderComments({ comments, addComment, campsiteId}) {
     if (comments) {
         return (<div className="col-md-5 m-1">
             <h4>Comments</h4>
             <div>
                 {comments.map((comment) => <div key={comment.id}><p>{comment.text}<br />--{comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}</p></div>)}
             </div>
-            <CommentForm/>
+            <CommentForm campsiteId={campsiteId} addComment={addComment}  />
         </div>);
     }
     return (<div />);
@@ -52,9 +52,7 @@ class CommentForm extends React.Component{
     }
 
     handleSubmit(values) {
-        // event.preventDefault();
-        console.log(JSON.stringify(values));
-        // alert((JSON.stringify(event)));
+        this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text);
     }
 
 
@@ -103,9 +101,9 @@ class CommentForm extends React.Component{
                                 </Col>
                             </Row>
                             <Row className="form-group">
-                                    <Label htmlFor="comment" md={2}>Comment</Label>
+                                    <Label htmlFor="text" md={2}>Comment</Label>
                                     <Col md={10}>
-                                        <Control.textarea id="comment" name="comment" className="form-control" model=".comment"
+                                        <Control.textarea id="text" name="comment" className="form-control" model=".text"
                                             rows="6"/>
                                     </Col>
                             </Row>
@@ -140,7 +138,9 @@ function CampsiteInfo(props) {
                     </div>
 
                     <RenderCampsite campsite={props.campsite} />
-                    <RenderComments comments={props.comments} />
+                    <RenderComments comments={props.comments}
+                    addComment={props.addComment}
+                    campsiteId= {props.campsite.id} />
                 </div>
             </div>
         );
