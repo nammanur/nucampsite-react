@@ -11,13 +11,16 @@ const minLength = len => val => val && (val.length >= len);
 function RenderCampsite({ campsite }) {
     if (campsite) {
         return (
-            <Card>
-                <CardImg top src={campsite.image} alt={campsite.name}></CardImg>
-                <CardBody>
-                    <CardText>{campsite.description}</CardText>
-                </CardBody>
+            <div className="col-md-5 m-1">
+                <Card>
+                    <CardImg top src={campsite.image} alt={campsite.name}></CardImg>
+                    <CardBody>
+                        <CardText>{campsite.description}</CardText>
+                    </CardBody>
 
-            </Card>);
+                </Card>
+            </div>
+            );
     }
     return <div />;
 }
@@ -52,6 +55,7 @@ class CommentForm extends React.Component{
     }
 
     handleSubmit(values) {
+        this.toggleModal();
         this.props.addComment(this.props.campsiteId, values.rating, values.author, values.text);
     }
 
@@ -112,7 +116,7 @@ class CommentForm extends React.Component{
                                         <Button type="submit" color="primary" >
                                             Submit
                                         </Button>
-                                    </Col>
+                                    </Col>c
                                 </Row>
                         </LocalForm>
                     </ModalBody>
@@ -136,11 +140,14 @@ function CampsiteInfo(props) {
                         <h2>{props.campsite.name}</h2>
                         <hr />
                     </div>
-
+                </div>
+                <div className='row'>
                     <RenderCampsite campsite={props.campsite} />
-                    <RenderComments comments={props.comments}
-                    addComment={props.addComment}
-                    campsiteId= {props.campsite.id} />
+                    <RenderComments 
+                        comments={props.comments}
+                        addComment={props.addComment}
+                        campsiteId={props.campsite.id}
+                    />
                 </div>
             </div>
         );
