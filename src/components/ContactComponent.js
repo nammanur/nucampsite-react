@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem, Button, Label, Col, Row } from 'reactstrap';
-import { Control, LocalForm, Errors} from 'react-redux-form';
+import { Control, Form, Errors} from 'react-redux-form';
 
 import { Link } from 'react-router-dom';
 
@@ -52,17 +52,19 @@ class Contact extends Component {
         // event.preventDefault();
         console.log(this.stringifyEvent(values));
         console.log(JSON.stringify(values));
+        this.props.resetFeedbackFrom();
         // alert((JSON.stringify(event)));
     }
 
     render() {
 
+        try {
         return (
             <div className="container">
                 <div className="row">
                     <div className="col">
                         <Breadcrumb>
-                            <BreadcrumbItem><Link to='./home'>Home</Link></BreadcrumbItem>
+                            <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
                             <BreadcrumbItem active>Contact Us</BreadcrumbItem>
                         </Breadcrumb>
                         <h2>Contact Us</h2>
@@ -90,7 +92,7 @@ class Contact extends Component {
                         <hr />
                     </div>
                     <div className="col-md-10">
-                        <LocalForm onSubmit={values => this.handleSubmit(values)}>
+                    <Form model="feedbackForm" onSubmit={values => this.handleSubmit(values)}>      
                             <Row className="form-group">
                                 <Label htmlFor="firstName" md={2}>First Name</Label>
                                 <Col md={10}>
@@ -209,11 +211,16 @@ class Contact extends Component {
                                     </Button>
                                 </Col>
                             </Row>
-                        </LocalForm>
+                        </Form>
                     </div>
                 </div>
             </div>
         );
+                                        }
+                                        catch(error) {
+                                            console.error(error);
+                                            return (<div/>);
+                                        }
     }
 }
 
