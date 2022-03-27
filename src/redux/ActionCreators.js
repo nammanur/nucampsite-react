@@ -157,7 +157,37 @@ export const promotionsFailed = errMess => ({
     payload: errMess
 });
 
+export const feedbackFailed = errMess => ({
+    type: ActionTypes.FEEDBACK_FAILED,
+    payload: errMess
+});
+
+
 export const addPromotions = promotions => ({
     type: ActionTypes.ADD_PROMOTIONS,
     payload: promotions
 });
+
+export const postFeedback = (feedback) => dispatch => {
+    fetch(baseUrl+'feedback', {
+        method: 'post',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(feedback)
+        }).then(response => {
+            if (response.ok) {
+                alert('Thank you for your feedback: '+JSON.stringify(feedback));
+                return response;
+            } else {
+                const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => {
+            const errMess = new Error(error.message);
+            throw errMess;
+        }
+    )
+    .then(response=>response.json())
+    .catch(error => dispatch(feedbackFailed(error.message)))
+};

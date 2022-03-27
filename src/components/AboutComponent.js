@@ -26,14 +26,14 @@ function RenderPartner({partner}) {
 
 function  PartnersList(props) { 
     if ( props.partners.isLoading ) {
-        console.log("PARTNERS LOADING");
         return (<Loading/>)
     } else if ( props.partners.partnerErrMess ) {
         return (<div className="col"><h4>{props.parterErrMess}</h4></div>)
     } else {
         console.log(props.partners.partners);
+
         return (<div className="col mt-4">
-               <Media list={props.partners.partners} ></Media>
+               <Media list >RenderPartner</Media>
        </div>)
     }
 }
@@ -41,6 +41,11 @@ function  PartnersList(props) {
 
 function About(props) {
 
+    let partners = props.partners.isLoading?<Loading/> :props.partners.partners.map(partner => {
+        return (
+            <Media tag="li" key={partner.id}><RenderPartner partner={partner}/></Media>
+        );
+    });
     return (
         <div className="container">
             <div className="row">
@@ -93,7 +98,11 @@ function About(props) {
                 <div className="col-12">
                     <h3>Community Partners</h3>
                 </div>
-                <PartnersList partners = {props.partners}/>
+                <div className="col mt-4">
+                    <Media list>
+                        {partners}
+                    </Media>
+                </div>
             </div>
         </div>
     );
