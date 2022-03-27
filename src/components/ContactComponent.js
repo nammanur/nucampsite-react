@@ -49,11 +49,7 @@ class Contact extends Component {
       }
 
     handleSubmit(values) {
-        // event.preventDefault();
-        console.log(this.stringifyEvent(values));
-        console.log(JSON.stringify(values));
         this.props.resetFeedbackFrom();
-        // alert((JSON.stringify(event)));
     }
 
     render() {
